@@ -1,0 +1,47 @@
+//Anwesenheit der Handys
+
+	Switch HandyLara "Handy Lara"  <network> (gAnwesenheit) { channel="network:device:192_168_178_24:online" }
+
+	Switch HandyMarcel "Handy Marcel" <network> (gAnwesenheit) { channel="network:device:192_168_178_58:online" }
+
+	Group:Switch:OR(ON, OFF) gAnwesenheit  "Anwesenheit [(%d)]" <network>
+	
+
+//Steckdosen
+
+	Switch Lichterkette_Bett "Lichterkette Bett" <light> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 11] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 10]"}
+
+	Switch Lichterkette "Lichterkette" <light> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 15] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 14]"}
+
+	Switch TV_Schlafzimmer "TV-Schlafzimmer" <screen> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 7] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 6]"}
+
+	Switch TV_PS4_Receiver "TV-Wohnzimmer" <receiver> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 1361] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 1364]"}
+
+	Switch Erhitzer "Durchlauferhitzer" <temperature> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 5201] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 5204]"}
+
+	Switch Lampe_TV_WZ "Lampe_TV_WZ" <light> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 4433] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 4436]"}
+
+
+
+	Switch Alles_aus "Alles ausschalten" {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 13] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 12]"}
+
+
+//Wetter Essen
+	Group gWeather
+	Number Essen_Temperatur "Aussentemperatur [%.1f °C]" <temperature> (gWeather) { channel="yahooweather:weather:wetter-essen:temperature" }
+	Number Essen_Humidity   "Luftfeuchtigkeit [%d %%]"   <humidity>    (gWeather) { channel="yahooweather:weather:wetter-essen:temperature" }
+	Number Essen_Pressure   "Luftdruck [%.1f mbar]"      <pressure>    (gWeather) { channel="yahooweather:weather:wetter-essen:pressure" }
+
+
+
+
+//Chromecast Wohnzimmer 
+	
+	Dimmer VolumeWZ "Volume_Wohnzimmer"  { channel="chromecast:audio:chromecast-wohnzimmer:volume" }
+	Player MusicWZ "Steuerung_Wohnzimmer" <mediacontrol> { channel="chromecast:audio:chromecast-wohnzimmer:control" }
+
+
+//Chromecast Schlafzimmer 
+	
+	Dimmer VolumeSZ "Volume_Schlafzimmer" { channel="chromecast:audio:chromecast-schlafzimmer:volume" }
+	Player MusicSZ "Steuerung_Schlafzimmer" <mediacontrol> { channel="chromecast:audio:chromecast-schlafzimmer:control" }
