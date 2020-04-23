@@ -1,47 +1,79 @@
 //Anwesenheit der Handys
 
-	Switch HandyLara "Handy Lara"  <network> (gAnwesenheit) { channel="network:device:192_168_178_24:online" }
 
-	Switch HandyMarcel "Handy Marcel" <network> (gAnwesenheit) { channel="network:device:192_168_178_58:online" }
+	Switch HandyMarcel "Handy Marcel" <network> (gAnwesenheit) { channel="network:pingdevice:HandyMarcel:online" }
+
+
 
 	Group:Switch:OR(ON, OFF) gAnwesenheit  "Anwesenheit [(%d)]" <network>
 	
 
 //Steckdosen
 
-	Switch Lichterkette_Bett "Lichterkette Bett" <light> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 11] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 10]"}
+	Switch Lichterkette_Bett "Lichterkette Bett" <light> {exec=">[ON: /home/openhabian/433Utils/RPi_utils/codesend 11] >[OFF: /home/openhabian/433Utils/RPi_utils/codesend 10]"}
 
-	Switch Lichterkette "Lichterkette" <light> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 15] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 14]"}
+	Switch Lichterkette "Lichterkette" <light> {exec=">[ON:/home/openhabian/433Utils/RPi_utils/codesend 15] >[OFF:/home/openhabian/433Utils/RPi_utils/codesend 14]"}
 
-	Switch TV_Schlafzimmer "TV-Schlafzimmer" <screen> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 7] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 6]"}
+	Switch Lampe_Schlafzimmer "Lampe Schlafzimmer" <light> {exec=">[ON: /home/openhabian/433Utils/RPi_utils/codesend 7] >[OFF: /home/openhabian/433Utils/RPi_utils/codesend 6]"}
 
-	Switch TV_PS4_Receiver "TV-Wohnzimmer" <receiver> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 1361] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 1364]"}
+	Switch TV_PS4_Receiver "TV-Wohnzimmer" <receiver> {exec=">[ON: /home/openhabian/433Utils/RPi_utils/codesend 1361] >[OFF: /home/openhabian/433Utils/RPi_utils/codesend 1364]"}
 
-	Switch Erhitzer "Durchlauferhitzer" <temperature> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 5201] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 5204]"}
+	Switch Erhitzer "Durchlauferhitzer" <temperature> {exec=">[ON: /home/openhabian/433Utils/RPi_utils/codesend 5201] >[OFF: /home/openhabian/433Utils/RPi_utils/codesend 5204]"}
 
-	Switch Lampe_TV_WZ "Lampe_TV_WZ" <light> {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 4433] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 4436]"}
-
-
-
-	Switch Alles_aus "Alles ausschalten" {exec=">[ON:sudo /home/openhabian/433Utils/RPi_utils/codesend 13] >[OFF:sudo /home/openhabian/433Utils/RPi_utils/codesend 12]"}
+	Switch Steckdose_SZ "Schlafzimmer" <light> {exec=">[ON: /home/openhabian/433Utils/RPi_utils/codesend 4433] >[OFF: /home/openhabian/433Utils/RPi_utils/codesend 4436]"}
 
 
-//Wetter Essen
-	Group gWeather
-	Number Essen_Temperatur "Aussentemperatur [%.1f °C]" <temperature> (gWeather) { channel="yahooweather:weather:wetter-essen:temperature" }
-	Number Essen_Humidity   "Luftfeuchtigkeit [%d %%]"   <humidity>    (gWeather) { channel="yahooweather:weather:wetter-essen:temperature" }
-	Number Essen_Pressure   "Luftdruck [%.1f mbar]"      <pressure>    (gWeather) { channel="yahooweather:weather:wetter-essen:pressure" }
+
+	Switch Alles_aus "Alles ausschalten" {exec=">[ON: /home/openhabian/433Utils/RPi_utils/codesend 13] >[OFF: /home/openhabian/433Utils/RPi_utils/codesend 12]"}
 
 
 
 
-//Chromecast Wohnzimmer 
-	
-	Dimmer VolumeWZ "Volume_Wohnzimmer"  { channel="chromecast:audio:chromecast-wohnzimmer:volume" }
-	Player MusicWZ "Steuerung_Wohnzimmer" <mediacontrol> { channel="chromecast:audio:chromecast-wohnzimmer:control" }
+//Chromecast
+
+Dimmer Volume { channel="chromecast:audio:cc-wohnzimmer:volume" }
+Player Music { channel="chromecast:audio:cc-wohnzimmer:control" }
 
 
-//Chromecast Schlafzimmer 
-	
-	Dimmer VolumeSZ "Volume_Schlafzimmer" { channel="chromecast:audio:chromecast-schlafzimmer:volume" }
-	Player MusicSZ "Steuerung_Schlafzimmer" <mediacontrol> { channel="chromecast:audio:chromecast-schlafzimmer:control" }
+//Tradfri
+Color Lampe_TV_Color { channel="tradfri:0210:gwb8d7af2cbd95:65539:color"}
+Dimmer Lampe_TV_Waerme { channel="tradfri:0210:gwb8d7af2cbd95:65539:color_temperature" }
+Switch Lampe_TV_Switch { channel="tradfri:0210:gwb8d7af2cbd95:65539:color" }
+
+
+Color Stehlampe_Color { channel="tradfri:0210:gwb8d7af2cbd95:65538:color"}
+Dimmer Stehlampe_Waerme { channel="tradfri:0210:gwb8d7af2cbd95:65538:color_temperature" }
+Switch Stehlampe_Switch { channel="tradfri:0210:gwb8d7af2cbd95:65538:color" }
+
+
+
+//Wetter in Essen
+
+String localStationId "ID [%s]" { channel="openweathermap:weather-and-forecast:api:local:station#id" }
+String localStationName "Name [%s]" { channel="openweathermap:weather-and-forecast:api:local:station#name" }
+Location localStationLocation "Location [%2$s°N %3$s°E]" <location> { channel="openweathermap:weather-and-forecast:api:local:station#location" }
+
+DateTime localLastMeasurement "Zuletzt gemessen [%1$tY-%1$tm-%1$tdT%1$tH:%1$tM:%1$tS]" <time> { channel="openweathermap:weather-and-forecast:api:local:current#time-stamp" }
+String localCurrentCondition "Wetterlage [%s]" <sun_clouds> { channel="openweathermap:weather-and-forecast:api:local:current#condition" }
+Image localCurrentConditionIcon "Icon" { channel="openweathermap:weather-and-forecast:api:local:current#icon" }
+Number:Temperature localCurrentTemperature "Aktuelle Temperatur [%.1f %unit%]" <temperature> { channel="openweathermap:weather-and-forecast:api:local:current#temperature" }
+Number:Pressure localCurrentPressure "Current barometric pressure [%.1f %unit%]" <pressure> { channel="openweathermap:weather-and-forecast:api:local:current#pressure" }
+Number:Dimensionless localCurrentHumidity "Current atmospheric humidity [%d %unit%]" <humidity> { channel="openweathermap:weather-and-forecast:api:local:current#humidity" }
+Number:Speed localCurrentWindSpeed "Current wind speed [%.1f km/h]" <wind> { channel="openweathermap:weather-and-forecast:api:local:current#wind-speed" }
+Number:Angle localCurrentWindDirection "Current wind direction [%d %unit%]" <wind> { channel="openweathermap:weather-and-forecast:api:local:current#wind-direction" }
+Number:Dimensionless localCurrentCloudiness "Wolkenstatus [%d %unit%]" <clouds> { channel="openweathermap:weather-and-forecast:api:local:current#cloudiness" }
+Number:Length localCurrentRainVolume "Regenmenge [%.1f %unit%]" <rain> { channel="openweathermap:weather-and-forecast:api:local:current#rain" }
+Number:Length localCurrentSnowVolume "Current snow volume [%.1f %unit%]" <snow> { channel="openweathermap:weather-and-forecast:api:local:current#snow" }
+
+DateTime localDailyForecastTodayTimestamp "Timestamp of forecast [%1$tY-%1$tm-%1$td]" <time> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#time-stamp" }
+String localDailyForecastTodayCondition "Condition for today [%s]" <sun_clouds> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#condition" }
+Image localDailyForecastTodayConditionIcon "Icon" { channel="openweathermap:weather-and-forecast:api:local:forecastToday#icon" }
+Number:Temperature localDailyForecastTodayMinTemperature "Minimum temperature for today [%.1f %unit%]" <temperature> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#min-temperature" }
+Number:Temperature localDailyForecastTodayMaxTemperature "Maximum temperature for today [%.1f %unit%]" <temperature> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#max-temperature" }
+Number:Pressure localDailyForecastTodayPressure "Barometric pressure for today [%.1f %unit%]" <pressure> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#pressure" }
+Number:Dimensionless localDailyForecastTodayHumidity "Atmospheric humidity for today [%d %unit%]" <humidity> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#humidity" }
+Number:Speed localDailyForecastTodayWindSpeed "Wind speed for today [%.1f km/h]" <wind> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#wind-speed" }
+Number:Angle localDailyForecastTodayWindDirection "Wind direction for today [%d %unit%]" <wind> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#wind-direction" }
+Number:Dimensionless localDailyForecastTodayCloudiness "Cloudiness for today [%d %unit%]" <clouds> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#cloudiness" }
+Number:Length localDailyForecastTodayRainVolume "Rain volume for today [%.1f %unit%]" <rain> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#rain" }
+Number:Length localDailyForecastTodaySnowVolume "Snow volume for today [%.1f %unit%]" <snow> { channel="openweathermap:weather-and-forecast:api:local:forecastToday#snow" }

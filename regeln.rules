@@ -1,0 +1,50 @@
+rule "Stehlampe aus um 23:59h"
+	when 
+    	Time cron "0 59 23 1/1 * ? *" 
+	then
+    	Stehlampe_Switch.sendCommand(OFF)
+	end
+
+
+rule "Stehlampe wenn handy im Wlan"
+	when 
+		Switch HandyMarcel changed from OFF to ON
+    then
+    	Stehlampe_Switch.sendCommand(ON)
+	end
+
+
+
+rule "Lichterkette aus um 22:30h"
+	when
+		Time cron "0 30 22 1/1 * ? *"
+	then
+		Lichterkette.sendCommand(OFF)
+	end
+
+
+rule "TV_Lampe aus um 23:01h"
+	when
+		Time cron "0 1 23 1/1 * ? *"
+	then
+		Lampe_TV_WZ.sendCommand(OFF)
+	end
+
+
+
+
+rule "Durchlauferhitzer aus um 21:30h (Nur Wochentag)"
+	when
+		Time cron "0 30 21 ? * MON-FRI *" 
+	then
+		Erhitzer.sendCommand(OFF)
+	end
+	
+
+
+rule "Durchlauferhitzer an um 18h (Nur Wochentag)"
+	when
+		Time cron "0 0 18 ? * MON-FRI *" 
+	then
+		Erhitzer.sendCommand(ON)
+	end

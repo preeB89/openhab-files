@@ -1,0 +1,57 @@
+sitemap Zuhause label="Zuhause"
+
+{
+  Frame label="Anwesenheit"{
+		Switch item=HandyMarcel label="Handy Marcel"
+	}
+	
+	
+  Frame label="Wohnzimmer"{
+  	Switch item=TV_PS4_Receiver label="TV Wohnzimmer" mappings=[ "ON"="AN", "OFF"="AUS" ]
+    //Switch item=Lichterkette label=Lichterkette mappings=[ "ON"="AN", "OFF"="AUS" ]//
+  
+  Frame label="Stehlampe" {  
+    Slider item=Stehlampe_Waerme label="Stehlampe Wärme [%.1f %%]"
+    Colorpicker item=Stehlampe_Color label="Stehlampe Farbe"
+    Switch item=Stehlampe_Switch label="An/Aus" mappings=["ON"="AN", "OFF"="AUS"]
+  }
+  }
+
+Frame label="Küche" {
+    Frame label="Küchenlampe" {  
+    Slider item=Lampe_TV_Waerme label="Lampe TV Wärme [%.1f %%]"
+    Colorpicker item=Lampe_TV_Color label="Lampe TV Farbe"
+    Switch item=Lampe_TV_Switch label="An/Aus" mappings=["ON"="AN", "OFF"="AUS"]
+  }
+
+  }
+
+
+  Frame label="Schlafzimmer" {
+      Switch item=Lampe_Schlafzimmer label="Lampe Schlafzimmer" mappings=["ON"="AN", "OFF"="AUS"]
+  }
+   
+
+  Frame label="Chromecasts" {
+    Frame label="Chromecast Wohnzimmer"{
+        Default item=Music
+        Slider item=Volume icon=soundvolume
+    }
+  }
+
+
+  Frame label="Wetter in Essen" {
+
+     Frame label="Aktuelles Wetter" {
+        Text item=localLastMeasurement
+        Text item=localCurrentCondition
+        Text item=localCurrentTemperature
+        Text item=localCurrentCloudiness
+        Text item=localCurrentRainVolume
+    }
+
+  }
+
+}
+
+

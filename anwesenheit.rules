@@ -1,0 +1,29 @@
+
+
+//rule "Lampe an bei Anwesenheit"
+	when
+		Item HandyMarcel changed to ON
+	then
+      	Stehlampe_Switch.sendCommand(ON)
+    end
+
+
+rule "Lampe dimmen ab 22 Uhr"
+	when
+	Time cron "0 0 22 ? * MON-SUN *"
+		
+	then
+      	Stehlampe_Waerme.sendCommand(100)
+    end
+     
+     
+
+rule "TV automatisch aus um 00:30"
+	when
+	Time cron "0 30 0 ? * MON-FRI *"
+		
+	then
+      	TV_PS4_Receiver.sendCommand(OFF)
+    end
+     
+     

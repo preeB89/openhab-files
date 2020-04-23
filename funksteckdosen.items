@@ -1,0 +1,7 @@
+Group:Switch:OR(OFF, ON) Gplugs <poweroutlet>
+
+Switch Power_Plug_Socket_1 <poweroutlet> (Gplugs)
+
+Switch Remote_Send      { channel="exec:command:remote-send-01:run"    }
+String Remote_Send_Args { channel="exec:command:remote-send-01:input"  }
+String Remote_Send_Out  { channel="exec:command:remote-send-01:output" }
